@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedgonca <pedgonca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: quackson <quackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 18:54:31 by pedgonca          #+#    #+#             */
-/*   Updated: 2023/03/08 14:47:29 by pedgonca         ###   ########.fr       */
+/*   Updated: 2023/03/10 17:03:23 by quackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,30 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	*(unsigned int*)dst = color;
 }
 
-int	main(int argc, char **argv)
+
+int	main(void)
+{
+	void	*mlx;
+	t_data	img;
+
+	mlx = mlx_init();
+	img.img = mlx_new_image(mlx, 1920, 1080);
+
+	/*
+	** After creating an image, we can call `mlx_get_data_addr`, we pass
+	** `bits_per_pixel`, `line_length`, and `endian` by reference. These will
+	** then be set accordingly for the *current* data address.
+	*/
+	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
+								&img.endian);
+}
+
+
+/* int	main(int argc, char **argv)
 {
 	char	**map;
+	void	*mlx;
+	t_data	img;
 
 	if (argc != 2)
 	{
@@ -46,6 +67,12 @@ int	main(int argc, char **argv)
 		ft_printf("Error\nMisconfigured map\n");
 		return (0);
 	}
+
+	mlx = mlx_init();
+	img.img = mlx_new_image(mlx, 1920, 1080);
+
+	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
+								&img.endian);
 	int i = 0;
 	printf("\n");
 	while (map[i])
@@ -54,4 +81,4 @@ int	main(int argc, char **argv)
 		i++;
 	}
 	free_map(map);
-}
+} */

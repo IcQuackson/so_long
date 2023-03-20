@@ -63,14 +63,12 @@ char	**get_map_from_file(char *file_name)
 
 char	**get_map(char *file_name)
 {
-	int		i;
 	int		len;
 	char	**map;
 
 	len = ft_strlen(file_name);
 	if (len < 5)
 		return (NULL);
-	i = -1;
 	if (ft_strncmp(file_name + len - 4, ".ber", 4) != 0)
 		return (NULL);
 	ft_printf("file_name: %s\n", file_name);

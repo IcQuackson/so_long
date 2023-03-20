@@ -60,13 +60,11 @@ int	check_components(char **map)
 
 int	check_vertical_walls(char **map)
 {
-	size_t		i;
 	size_t		len;
 
 	if (!map || !(*map))
 		return (0);
 	len = ft_strlen(*map);
-	i = 0;
 	while (*map)
 	{
 		if ((*map)[0] != '1' || (*map)[len - 1] != '1')

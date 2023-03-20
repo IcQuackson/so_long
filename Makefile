@@ -11,7 +11,7 @@ CHECKERS_DIR = ./src/map_checkers
 
 # Source Files
 GET_NEXT_SRCS = $(GET_NEXT_DIR)/get_next_line_utils.c $(GET_NEXT_DIR)/get_next_line.c
-CHECKERS_SRCS = $(CHECKERS_DIR)/map_checkers1.c $(CHECKERS_DIR)/map_checkers2.c $(CHECKERS_DIR)/map_checkers3.c
+CHECKERS_SRCS = $(CHECKERS_DIR)/map_checkers1.c $(CHECKERS_DIR)/map_checkers2.c $(CHECKERS_DIR)/map_checkers3.c $(CHECKERS_DIR)/map_checkers4.c
 
 SRCS = $(SRCDIR)/main.c $(CHECKERS_SRCS) $(GET_NEXT_SRCS)
 OBJ = $(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
