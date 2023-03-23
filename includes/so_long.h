@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedgonca <pedgonca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: quackson <quackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 15:16:47 by pedgonca          #+#    #+#             */
-/*   Updated: 2023/03/20 13:55:56 by pedgonca         ###   ########.fr       */
+/*   Updated: 2023/03/23 14:55:22 by quackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@
 # include "mlx.h"
 # include <fcntl.h>
 
+# define WIDTH 640
+# define HEIGHT 480
+# define TILE_SIZE 30
 
 enum e_key_codes
 {
@@ -43,13 +46,28 @@ enum e_events
 
 typedef struct s_map
 {
-	int		start_x;
-	int		start_y;
+	int		player_x;
+	int		player_y;
+	/* int		exit_x;
+	int		exit_y; */
 	int		height;
 	int		width;
 	int		**matrix;
 	char	**map;
 }	t_map;
+
+typedef struct s_game
+{
+	t_map	*map_data;
+	void	*mlx;
+	void	*win;
+	void	*player_img;
+	void	*space_img;
+	void	*wall_img;
+	void	*enemy_img;
+	void	*collectible_img;
+	void	*exit_img;
+}	t_game;
 
 typedef struct s_data
 {
@@ -60,13 +78,7 @@ typedef struct s_data
 	int		endian;
 }	t_data;
 
-typedef struct s_vars
-{
-	void	*mlx;
-	void	*win;
-}	t_vars;
-
-char		**get_map(char *file_name);
+char		**get_map(char *file_name, t_map *map_data);
 int			check_characters(char **map);
 int			error(const char *msg);
 void		free_map(char **map);
@@ -76,7 +88,7 @@ char		**get_map_from_file(char *file_name);
 int			count_lines(char *file_name);
 int			check_vertical_walls(char **map);
 int			check_components(char **map);
-int			path_exists(char	**map);
+int			path_exists(char **map, t_map *map_data);
 int			**get_matrix(int height, int width);
 void		set_matrix(t_map *map_data);
 void		free_matrix(int **matrix);
@@ -86,8 +98,22 @@ void		get_size(t_map *map_data);
 int			count_collectibles(t_map *mapa_data);
 
 /* HOOKS */
-int			close_window_esc(int keycode, t_vars *vars);
-int			close_win_cross(t_vars *vars);
-int			key_hook(int keycode, t_vars *vars);
-int			mouse_hook(int button, int x, int y, t_vars *vars);
+int			key_down_hook(int keycode, t_game *game_data);
+int			handle_closewindow(t_game *game_data);
+int			key_up_hook(int keycode, t_game *game_data);
+int			mouse_hook(int button, int x, int y, t_game *game_data);
+
+void		load_imgs(t_game *game_data);
+void		register_hooks(t_game *game_data);
+void		paint_map(t_game *game_data);
+
+/* MOVEMENT */
+int			move_up(t_game *game_data);
+int			move_down(t_game *game_data);
+int			move_left(t_game *game_data);
+int			move_right(t_game *game_data);
+int			move(t_game *game_data, int new_x, int new_y);
+void		paint_movement(t_game *game_data, int new_x, int new_y);
+void		get_player_and_exit(t_map *map_data);
+
 #endif

@@ -6,7 +6,7 @@
 /*   By: quackson <quackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 17:01:05 by quackson          #+#    #+#             */
-/*   Updated: 2023/03/10 17:01:22 by quackson         ###   ########.fr       */
+/*   Updated: 2023/03/23 12:53:46 by quackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ void	set_matrix(t_map *map_data)
 				map_data->matrix[i][j] = 0;
 			if (map_data->map[i][j] == 'P')
 			{
-				map_data->start_x = i;
-				map_data->start_y = j;
+				map_data->player_x = i;
+				map_data->player_y = j;
 			}
 			else if (map_data->map[i][j] == '1')
 				map_data->matrix[i][j] = 1;

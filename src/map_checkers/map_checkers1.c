@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_checkers1.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pedgonca <pedgonca@student.42.fr>          +#+  +:+       +#+        */
+/*   By: quackson <quackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 18:43:50 by pedgonca          #+#    #+#             */
-/*   Updated: 2023/03/08 14:33:56 by pedgonca         ###   ########.fr       */
+/*   Updated: 2023/03/23 15:15:56 by quackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ char	**get_map_from_file(char *file_name)
 	if (n_lines <= 0)
 		return (NULL);
 	map = malloc((n_lines + 1) * sizeof(char *));
+	ft_printf("n_line:%d\n", n_lines);
 	if (!map)
 		return (NULL);
 	fd = open(file_name, O_RDONLY);
@@ -61,7 +62,7 @@ char	**get_map_from_file(char *file_name)
 	return (map);
 }
 
-char	**get_map(char *file_name)
+char	**get_map(char *file_name, t_map *map_data)
 {
 	int		len;
 	char	**map;
@@ -75,7 +76,7 @@ char	**get_map(char *file_name)
 	map = NULL;
 	map = get_map_from_file(file_name);
 	if (!map || !is_rectangular(map) || !check_characters(map)
-		|| !path_exists(map))
+		|| !path_exists(map, map_data))
 	{
 		free_map(map);
 		return (NULL);

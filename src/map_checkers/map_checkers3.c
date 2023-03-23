@@ -6,7 +6,7 @@
 /*   By: quackson <quackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 12:29:03 by pedgonca          #+#    #+#             */
-/*   Updated: 2023/03/10 17:01:49 by quackson         ###   ########.fr       */
+/*   Updated: 2023/03/23 12:43:47 by quackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,30 +20,26 @@
 	character to go from the starting point to the exit
 	and collect ALL of the collectibles in the map.
 */
-int	path_exists(char **map)
+int	path_exists(char **map, t_map *map_data)
 {
 	int		collectibles;
 	int		path_exists;
-	t_map	*map_data;
 
-	map_data = malloc(sizeof(t_map));
-	if (!map_data)
-		return (0);
 	map_data->map = map;
 	get_size(map_data);
 	map_data->matrix = get_matrix(map_data->height, map_data->width);
 	if (!(map_data->matrix))
 		return (0);
 	set_matrix(map_data);
+	//get_player_and_exit(map_data);
 	print_matrix(map_data);
 	collectibles = 0;
 	path_exists = 0;
-	if (flood_fill(map_data, map_data->start_x,
-			map_data->start_y, &collectibles)
+	if (flood_fill(map_data, map_data->player_x,
+			map_data->player_y, &collectibles)
 		&& collectibles == count_collectibles(map_data))
 		path_exists = 1;
 	free_matrix(map_data->matrix);
-	free(map_data);
 	return (path_exists);
 }
 
