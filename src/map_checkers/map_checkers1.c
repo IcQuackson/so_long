@@ -6,12 +6,11 @@
 /*   By: quackson <quackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 18:43:50 by pedgonca          #+#    #+#             */
-/*   Updated: 2023/03/23 15:15:56 by quackson         ###   ########.fr       */
+/*   Updated: 2023/03/24 12:19:17 by quackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/so_long.h"
-
 
 int	count_lines(char *file_name)
 {
@@ -62,7 +61,7 @@ char	**get_map_from_file(char *file_name)
 	return (map);
 }
 
-char	**get_map(char *file_name, t_map *map_data)
+char	**get_map(char *file_name, t_game *game_data)
 {
 	int		len;
 	char	**map;
@@ -76,7 +75,7 @@ char	**get_map(char *file_name, t_map *map_data)
 	map = NULL;
 	map = get_map_from_file(file_name);
 	if (!map || !is_rectangular(map) || !check_characters(map)
-		|| !path_exists(map, map_data))
+		|| !path_exists(map, game_data))
 	{
 		free_map(map);
 		return (NULL);

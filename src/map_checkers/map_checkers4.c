@@ -6,36 +6,36 @@
 /*   By: quackson <quackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 17:01:05 by quackson          #+#    #+#             */
-/*   Updated: 2023/03/23 12:53:46 by quackson         ###   ########.fr       */
+/*   Updated: 2023/03/24 12:19:34 by quackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/so_long.h"
 
-void	set_matrix(t_map *map_data)
+void	set_matrix(t_game *game_data)
 {
 	int		i;
 	int		j;
 
 	i = -1;
-	while (++i < map_data->height)
+	while (++i < game_data->height)
 	{
 		j = -1;
-		while (++j < map_data->width)
+		while (++j < game_data->width)
 		{
-			if (map_data->map[i][j] == '0' || map_data->map[i][j] == 'P')
-				map_data->matrix[i][j] = 0;
-			if (map_data->map[i][j] == 'P')
+			if (game_data->map[i][j] == '0' || game_data->map[i][j] == 'P')
+				game_data->matrix[i][j] = 0;
+			if (game_data->map[i][j] == 'P')
 			{
-				map_data->player_x = i;
-				map_data->player_y = j;
+				game_data->player_x = i;
+				game_data->player_y = j;
 			}
-			else if (map_data->map[i][j] == '1')
-				map_data->matrix[i][j] = 1;
-			else if (map_data->map[i][j] == 'E')
-				map_data->matrix[i][j] = 2;
-			else if (map_data->map[i][j] == 'C')
-				map_data->matrix[i][j] = 3;
+			else if (game_data->map[i][j] == '1' || game_data->map[i][j] == 'S')
+				game_data->matrix[i][j] = 1;
+			else if (game_data->map[i][j] == 'E')
+				game_data->matrix[i][j] = 2;
+			else if (game_data->map[i][j] == 'C')
+				game_data->matrix[i][j] = 3;
 		}
 	}
 }
@@ -51,18 +51,18 @@ void	free_matrix(int **matrix)
 	free(matrix);
 }
 
-void	print_matrix(t_map *map_data)
+void	print_matrix(t_game *game_data)
 {
 	int		i;
 	int		j;
 
 	i = 0;
 	j = 0;
-	while (i < map_data->height)
+	while (i < game_data->height)
 	{
-		while (j < map_data->width)
+		while (j < game_data->width)
 		{
-			ft_printf("%d", map_data->matrix[i][j]);
+			ft_printf("%d", game_data->matrix[i][j]);
 			j++;
 		}
 		j = 0;
@@ -70,5 +70,3 @@ void	print_matrix(t_map *map_data)
 		ft_printf("\n");
 	}
 }
-
-

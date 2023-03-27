@@ -1,6 +1,6 @@
 # Compiler settings
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g# -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 
 # Directories
 SRCDIR = src
@@ -56,7 +56,7 @@ gdb:	all
 		gdb --args $(NAME) $(ARGS)
 
 valgrind: 	all
-			valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose --log-file=valgrind-out.txt ./$(NAME) $(ARGS)
+			valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(NAME) $(ARGS)
 
 libft:
 		cd libft && make

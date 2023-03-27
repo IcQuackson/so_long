@@ -50,7 +50,7 @@ int	check_components(char **map)
 				exit++;
 			else if ((*map)[i] == 'P')
 				start++;
-			else if ((*map)[i] != '1' && (*map)[i] != '0')
+			else if ((*map)[i] != '1' && (*map)[i] != '0' && (*map)[i] != 'S')
 				return (0);
 		}
 		map++;

@@ -6,7 +6,7 @@
 /*   By: quackson <quackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 12:29:03 by pedgonca          #+#    #+#             */
-/*   Updated: 2023/03/23 12:43:47 by quackson         ###   ########.fr       */
+/*   Updated: 2023/03/24 15:33:30 by quackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,26 +20,26 @@
 	character to go from the starting point to the exit
 	and collect ALL of the collectibles in the map.
 */
-int	path_exists(char **map, t_map *map_data)
+int	path_exists(char **map, t_game *game_data)
 {
 	int		collectibles;
 	int		path_exists;
 
-	map_data->map = map;
-	get_size(map_data);
-	map_data->matrix = get_matrix(map_data->height, map_data->width);
-	if (!(map_data->matrix))
+	game_data->map = map;
+	get_size(game_data);
+	game_data->matrix = get_matrix(game_data->height, game_data->width);
+	if (!(game_data->matrix))
 		return (0);
-	set_matrix(map_data);
-	//get_player_and_exit(map_data);
-	print_matrix(map_data);
+	set_matrix(game_data);
+	print_matrix(game_data);
 	collectibles = 0;
 	path_exists = 0;
-	if (flood_fill(map_data, map_data->player_x,
-			map_data->player_y, &collectibles)
-		&& collectibles == count_collectibles(map_data))
+	game_data->collectibles = count_collectibles(game_data);
+	if (flood_fill(game_data, game_data->player_x,
+			game_data->player_y, &collectibles)
+		&& collectibles == game_data->collectibles)
 		path_exists = 1;
-	free_matrix(map_data->matrix);
+	free_matrix(game_data->matrix);
 	return (path_exists);
 }
 
@@ -51,31 +51,35 @@ int	path_exists(char **map, t_map *map_data)
 	5. Perform Flood-fill one step to the west of node
 	6. Perform Flood-fill one step to the east of node
 	7. Return. */
-int	flood_fill(t_map *map_data, int x, int y, int *collectibles)
+int	flood_fill(t_game *game_data, int x, int y, int *collectibles)
 {
 	static int	is_path;
 	int			**matrix;
 
 	(void) collectibles;
-	matrix = map_data->matrix;
-	if (x < 0 || x >= map_data->height || y < 0
-		|| y >= map_data->width || matrix[x][y] == 1)
+	matrix = game_data->matrix;
+	if (x < 0 || x >= game_data->height || y < 0
+		|| y >= game_data->width || matrix[x][y] == 1)
 		return (is_path);
 	if (matrix[x][y] == 3)
 		*collectibles = *collectibles + 1;
 	else if (matrix[x][y] == 2)
+	{
+		game_data->exit_x = x;
+		game_data->exit_y = y;
 		is_path = 1;
+	}
 	if (matrix[x][y] == -1)
 		return (is_path);
 	matrix[x][y] = -1;
-	flood_fill(map_data, x + 1, y, collectibles);
-	flood_fill(map_data, x - 1, y, collectibles);
-	flood_fill(map_data, x, y - 1, collectibles);
-	flood_fill(map_data, x, y + 1, collectibles);
+	flood_fill(game_data, x + 1, y, collectibles);
+	flood_fill(game_data, x - 1, y, collectibles);
+	flood_fill(game_data, x, y - 1, collectibles);
+	flood_fill(game_data, x, y + 1, collectibles);
 	return (is_path);
 }
 
-int	count_collectibles(t_map *mapa_data)
+int	count_collectibles(t_game *game_data)
 {
 	int	i;
 	int	j;
@@ -84,11 +88,11 @@ int	count_collectibles(t_map *mapa_data)
 	count = 0;
 	i = 0;
 	j = 0;
-	while (i < mapa_data->height)
+	while (i < game_data->height)
 	{
-		while (j < mapa_data->width)
+		while (j < game_data->width)
 		{
-			if (mapa_data->map[i][j] == 'C')
+			if (game_data->map[i][j] == 'C')
 				count++;
 			j++;
 		}
@@ -98,21 +102,21 @@ int	count_collectibles(t_map *mapa_data)
 	return (count);
 }
 
-void	get_size(t_map *map_data)
+void	get_size(t_game *game_data)
 {
 	int		height;
 	int		width;
 	char	**map;
 
-	map = map_data->map;
+	map = game_data->map;
 	height = 0;
 	width = 0;
 	while (map[height])
 		height++;
 	while (map[0][width])
 		width++;
-	map_data->height = height;
-	map_data->width = width;
+	game_data->height = height;
+	game_data->width = width;
 }
 
 int	**get_matrix(int height, int width)
