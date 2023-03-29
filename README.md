@@ -47,7 +47,7 @@ display an error message.\
 •The map must be closed/surrounded by walls. If it’s not, the program must return
 an error.\
 •You have to check if there’s a valid path in the map.\
-•You must be able to parse any kind of map, as long as it respects the above rules.
+•You must be able to parse any kind of map, as long as it respects the above rules.\
 •Another example of a minimal .ber map:\
 1111111111111111111111111111111111\
 1E0000000000000C00000C000000000001\
