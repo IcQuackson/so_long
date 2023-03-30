@@ -1,7 +1,7 @@
 # so_long
 
 A basic 2D game in which a dolphin
-escapes Earth after eating some fish.\
+escapes Earth after eating some fish.
 
 The player’s goal is to collect every collectible present on the map, then escape
 chosing the shortest possible route.\
