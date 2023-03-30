@@ -6,7 +6,7 @@
 /*   By: pedgonca <pedgonca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 11:41:05 by pedgonca          #+#    #+#             */
-/*   Updated: 2023/03/08 11:58:19 by pedgonca         ###   ########.fr       */
+/*   Updated: 2023/03/30 13:08:44 by pedgonca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,8 @@ int	is_rectangular(char **map)
 	len = ft_strlen(*map++);
 	while (*map)
 	{
+		if (map + 1 == NULL && ft_strlen(*map++) == len)
+			return (0);
 		if (ft_strlen(*map++) != len)
 			return (0);
 	}

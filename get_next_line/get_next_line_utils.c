@@ -6,109 +6,70 @@
 /*   By: pedgonca <pedgonca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 14:29:42 by pedgonca          #+#    #+#             */
-/*   Updated: 2023/03/08 11:52:49 by pedgonca         ###   ########.fr       */
+/*   Updated: 2023/03/30 13:07:18 by pedgonca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/get_next_line.h"
 
-char	*ft_get_line(char *stash)
+int	ft_strchrz(char c, char *line)
 {
-	int		i;
-	char	*line;
-
-	i = 0;
-	if (!*stash)
-		return (NULL);
-	while (stash[i] && stash[i] != '\n')
-		i++;
-	line = malloc((i + 2) * sizeof(char));
 	if (!line)
-		return (NULL);
-	i = 0;
-	while (stash[i] && stash[i] != '\n')
-	{
-		line[i] = stash[i];
-		i++;
-	}
-	line[i] = '\0';
-	return (line);
+		return (0);
+	while (*line)
+		if (*line++ == c)
+			return (1);
+	return (0);
 }
 
-char	*ft_new_stash(char	*stash)
+size_t	ft_strlenz(char *str)
 {
-	int		i;
-	int		j;
-	char	*new_stash;
+	int	i;
 
 	i = 0;
-	while (stash[i] && stash[i] != '\n')
-		i++;
-	if (!stash[i])
-	{
-		free(stash);
-		return (NULL);
-	}
-	new_stash = malloc((ft_strlen1(stash) - i + 1) * sizeof(char));
-	if (!new_stash)
-		return (NULL);
-	i++;
-	j = 0;
-	while (stash[i])
-		new_stash[j++] = stash[i++];
-	new_stash[j] = '\0';
-	free(stash);
-	return (new_stash);
-}
-
-char	*ft_strchr1(char *str, int c)
-{
 	if (!str)
-		return (NULL);
-	while (*str)
-	{
-		if (*str == c)
-			return (str);
-		str++;
-	}
-	if (*str == c)
-		return (str);
-	return (NULL);
-}
-
-char	*ft_strjoin1(char *s1, char *s2)
-{
-	char	*joined;
-	char	*s1_cpy;
-	int		i;
-
-	if (!s1)
-	{
-		s1 = malloc(1 * sizeof(char));
-		s1[0] = '\0';
-	}
-	if (!s1 || !s2)
-		return (NULL);
-	joined = malloc((ft_strlen1(s1) + ft_strlen1(s2) + 1) * sizeof(char));
-	if (!joined)
-		return (NULL);
-	i = 0;
-	s1_cpy = s1;
-	while (*s1_cpy)
-		joined[i++] = *s1_cpy++;
-	while (*s2)
-		joined[i++] = *s2++;
-	joined[i] = '\0';
-	free(s1);
-	return (joined);
-}
-
-size_t	ft_strlen1(char	*s)
-{
-	int		i;
-
-	i = 0;
-	while (*s++)
+		return (0);
+	while (str[i] && str[i] != '\n')
+		i++;
+	if (str[i] == '\n')
 		i++;
 	return (i);
+}
+
+void	clean(char *stash)
+{
+	int	i;
+	int	j;
+
+	i = ft_strlenz(stash);
+	j = 0;
+	while (stash[i])
+		stash[j++] = stash[i++];
+	while (stash[j])
+		stash[j++] = '\0';
+}
+
+char	*ft_strjoinz(char *line, char *buff)
+{
+	char	*str;
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	str = malloc((ft_strlenz(line) + ft_strlenz(buff) + 1) * sizeof(char));
+	if (!str)
+		return (0);
+	while (line && line[j])
+		str[i++] = line[j++];
+	j = 0;
+	while (buff && buff[j])
+	{
+		str[i] = buff[j++];
+		if (str[i++] == '\n')
+			break ;
+	}
+	str[i] = '\0';
+	free (line);
+	return (str);
 }

@@ -1,6 +1,6 @@
 # Compiler settings
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g #-fsanitize=address
 
 # Directories
 SRCDIR = src
@@ -8,16 +8,12 @@ OBJDIR = objs
 LIBFT_DIR = ./libft
 GET_NEXT_DIR = ./get_next_line
 CHECKERS_DIR = ./src/map_checkers
-HOOKS_DIR = ./src/hooks
-FUNC_DIR = ./src/functions
 
 # Source Files
 GET_NEXT_SRCS = $(GET_NEXT_DIR)/get_next_line_utils.c $(GET_NEXT_DIR)/get_next_line.c
 CHECKERS_SRCS = $(CHECKERS_DIR)/map_checkers1.c $(CHECKERS_DIR)/map_checkers2.c $(CHECKERS_DIR)/map_checkers3.c $(CHECKERS_DIR)/map_checkers4.c
-HOOKS_SRCS = $(HOOKS_DIR)/hooks_1.c
-FUNC_SRCS = $(FUNC_DIR)/functions.c $(FUNC_DIR)/movement.c
 
-SRCS = $(SRCDIR)/main.c $(CHECKERS_SRCS) $(GET_NEXT_SRCS) $(HOOKS_SRCS) $(FUNC_SRCS)
+SRCS = $(SRCDIR)/main.c $(SRCDIR)/hooks.c $(SRCDIR)/aux_1.c $(SRCDIR)/aux_2.c $(SRCDIR)/player_movement.c $(SRCDIR)/enemy_movement.c $(CHECKERS_SRCS) $(GET_NEXT_SRCS)
 OBJ = $(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 LIBFT = $(LIBFT_DIR)/libft.a
 
@@ -27,7 +23,7 @@ PRINTF = $(PRINTF_DIR)/libftprintf.a
 
 # Targets
 NAME = so_long
-ARGS = t.ber
+ARGS = test.ber
 
 all: 	$(NAME)
 

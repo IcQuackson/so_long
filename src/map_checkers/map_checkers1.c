@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_checkers1.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: quackson <quackson@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pedgonca <pedgonca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 18:43:50 by pedgonca          #+#    #+#             */
-/*   Updated: 2023/03/24 12:19:17 by quackson         ###   ########.fr       */
+/*   Updated: 2023/03/30 13:10:29 by pedgonca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,23 +15,23 @@
 int	count_lines(char *file_name)
 {
 	int		fd;
-	int		n;
-	char	*s;
+	int		num_lines;
+	char	*line;
 
 	fd = open(file_name, O_RDONLY);
 	if (fd == -1)
 		return (error("count_lines: Erro a ler ficheiro"));
-	n = 0;
+	num_lines = 0;
 	while (1)
 	{
-		s = get_next_line(fd);
-		if (s == NULL)
+		line = get_next_line(fd);
+		if (!line)
 			break ;
-		n++;
-		free(s);
-		s = NULL;
+		num_lines++;
+		free(line);
 	}
-	return (n);
+	close(fd);
+	return (num_lines);
 }
 
 char	**get_map_from_file(char *file_name)
@@ -45,7 +45,6 @@ char	**get_map_from_file(char *file_name)
 	if (n_lines <= 0)
 		return (NULL);
 	map = malloc((n_lines + 1) * sizeof(char *));
-	ft_printf("n_line:%d\n", n_lines);
 	if (!map)
 		return (NULL);
 	fd = open(file_name, O_RDONLY);
@@ -54,10 +53,11 @@ char	**get_map_from_file(char *file_name)
 		error("get_map: Erro a ler ficheiro");
 		return (NULL);
 	}
-	i = 0;
-	while (i < n_lines)
-		map[i++] = get_next_line(fd);
+	i = -1;
+	while (++i < n_lines)
+		map[i] = get_next_line(fd);
 	map[i] = NULL;
+	close(fd);
 	return (map);
 }
 
@@ -71,7 +71,6 @@ char	**get_map(char *file_name, t_game *game_data)
 		return (NULL);
 	if (ft_strncmp(file_name + len - 4, ".ber", 4) != 0)
 		return (NULL);
-	ft_printf("file_name: %s\n", file_name);
 	map = NULL;
 	map = get_map_from_file(file_name);
 	if (!map || !is_rectangular(map) || !check_characters(map)
@@ -91,7 +90,9 @@ void	free_map(char **map)
 		return ;
 	i = 0;
 	while (map[i])
+	{
 		free(map[i++]);
+	}
 	free(map[i]);
 	free(map);
 }

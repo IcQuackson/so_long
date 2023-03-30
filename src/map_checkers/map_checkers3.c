@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_checkers3.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: quackson <quackson@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pedgonca <pedgonca@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 12:29:03 by pedgonca          #+#    #+#             */
-/*   Updated: 2023/03/24 15:33:30 by quackson         ###   ########.fr       */
+/*   Updated: 2023/03/27 16:43:35 by pedgonca         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ int	path_exists(char **map, t_game *game_data)
 	if (!(game_data->matrix))
 		return (0);
 	set_matrix(game_data);
-	print_matrix(game_data);
 	collectibles = 0;
 	path_exists = 0;
 	game_data->collectibles = count_collectibles(game_data);
